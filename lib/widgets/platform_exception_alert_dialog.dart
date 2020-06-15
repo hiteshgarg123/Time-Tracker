@@ -21,7 +21,7 @@ class PlatformExceptionAlertDialog extends PlatformAlertDialog {
     'ERROR_INVALID_EMAIL': 'Enter a valid Email Address',
     'ERROR_EMAIL_ALREADY_IN_USE':
         'Email already registered , Try with different Email or Sign in',
-    'ERROR_WRONG_PASSWORD': 'The Password is invalid',
+    'ERROR_WRONG_PASSWORD': 'Incorrect Password',
     'ERROR_USER_NOT_FOUND': 'Email not registered , Try Signing up',
     'ERROR_USER_DISABLED': 'Account has been Disabled',
     'ERROR_TOO_MANY_REQUESTS': 'Too many sign-in requests , please wait',
