@@ -43,6 +43,11 @@ class PlatformAlertDialog extends PlatformWidget {
   @override
   Widget buildMaterialWidget(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(18.0),
+        ),
+      ),
       title: Text(title),
       content: Text(content),
       actions: _buildActions(context),

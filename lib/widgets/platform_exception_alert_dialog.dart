@@ -26,5 +26,7 @@ class PlatformExceptionAlertDialog extends PlatformAlertDialog {
     'ERROR_USER_DISABLED': 'Account has been Disabled',
     'ERROR_TOO_MANY_REQUESTS': 'Too many sign-in requests , please wait',
     'ERROR_OPERATION_NOT_ALLOWED': 'Email & Password accounts are not enabled',
+    'Error performing setData':
+        'You have insufficient permissions for this action.',
   };
 }
