@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/app/home/models/job.dart';
 import 'package:time_tracker/services/database.dart';
+import 'package:time_tracker/widgets/platform_alert_dialog.dart';
+import 'package:time_tracker/widgets/platform_exception_alert_dialog.dart';
 
 class AddJobPage extends StatefulWidget {
   const AddJobPage({
@@ -30,8 +33,17 @@ class AddJobPage extends StatefulWidget {
 class _AddJobPageState extends State<AddJobPage> {
   final _formKey = GlobalKey<FormState>();
 
+  final FocusNode _jobNameFocusNode = FocusNode();
+  final FocusNode _ratePerHourFocusNode = FocusNode();
+
   String _name;
   int _ratePerHour;
+
+  void dispose() {
+    _jobNameFocusNode.dispose();
+    _ratePerHourFocusNode.dispose();
+    super.dispose();
+  }
 
   bool _validateAndSaveForm() {
     final form = _formKey.currentState;
@@ -44,12 +56,29 @@ class _AddJobPageState extends State<AddJobPage> {
 
   Future<void> _submit() async {
     if (_validateAndSaveForm()) {
-      final job = Job(
-        name: _name,
-        ratePerHour: _ratePerHour,
-      );
-      await widget.database.createJob(job);
-      Navigator.of(context).pop();
+      try {
+        final jobs = await widget.database.jobsStream().first;
+        final allNames = jobs.map((job) => job.name).toList();
+        if (allNames.contains(_name)) {
+          PlatformAlertDialog(
+            title: 'Job already exists',
+            content: 'Please use a different Job name',
+            defaultActionText: 'Ok',
+          ).show(context);
+        } else {
+          final job = Job(
+            name: _name,
+            ratePerHour: _ratePerHour,
+          );
+          await widget.database.createJob(job);
+          Navigator.of(context).pop();
+        }
+      } on PlatformException catch (e) {
+        PlatformExceptionAlertDialog(
+          exception: e,
+          title: 'Operation failed',
+        ).show(context);
+      }
     }
   }
 
@@ -118,7 +147,7 @@ class _AddJobPageState extends State<AddJobPage> {
           signed: false,
           decimal: false,
         ),
-        onSaved: (value) => _ratePerHour = int.parse(value) ?? 0,
+        onSaved: (value) => _ratePerHour = int.tryParse(value) ?? 0,
       ),
     ];
   }
