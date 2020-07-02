@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/app/home/jobs/add_job_page.dart';
 import 'package:time_tracker/app/home/models/job.dart';
@@ -30,21 +29,6 @@ class JobsPage extends StatelessWidget {
     ).show(context);
     if (didRequestSignout == true) {
       _signOut(context);
-    }
-  }
-
-  Future<void> _createJob(BuildContext context) async {
-    try {
-      final database = Provider.of<Database>(context, listen: false);
-      await database.createJob(Job(
-        name: 'Learn Flutter',
-        ratePerHour: 100,
-      ));
-    } on PlatformException catch (e) {
-      PlatformExceptionAlertDialog(
-        title: 'Operation failed',
-        exception: e,
-      ).show(context);
     }
   }
 
