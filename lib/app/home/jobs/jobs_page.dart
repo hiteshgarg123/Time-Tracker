@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/app/home/jobs/edit_job_page.dart';
 import 'package:time_tracker/app/home/jobs/job_list_tile.dart';
@@ -31,6 +32,18 @@ class JobsPage extends StatelessWidget {
     ).show(context);
     if (didRequestSignout == true) {
       _signOut(context);
+    }
+  }
+
+  Future<void> _delete(BuildContext context, Job job) async {
+    try {
+      final database = Provider.of<Database>(context, listen: false);
+      await database.deleteJob(job);
+    } on PlatformException catch (e) {
+      PlatformExceptionAlertDialog(
+        exception: e,
+        title: 'Operation failed',
+      ).show(context);
     }
   }
 
@@ -67,9 +80,15 @@ class JobsPage extends StatelessWidget {
       builder: (context, snapshot) {
         return ListItemsBuilder(
           snapshot: snapshot,
-          itemBuilder: (context, job) => JobListTile(
-            job: job,
-            onTap: () => EditJobPage.show(context, job: job),
+          itemBuilder: (context, job) => Dismissible(
+            key: Key('job-${job.id}'),
+            background: Container(color: Colors.red),
+            direction: DismissDirection.endToStart,
+            onDismissed: (direction) => _delete(context, job),
+            child: JobListTile(
+              job: job,
+              onTap: () => EditJobPage.show(context, job: job),
+            ),
           ),
         );
       },
