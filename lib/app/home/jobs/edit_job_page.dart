@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:time_tracker/app/home/models/job.dart';
 import 'package:time_tracker/services/database.dart';
-import 'package:time_tracker/widgets/platform_alert_dialog.dart';
-import 'package:time_tracker/widgets/platform_exception_alert_dialog.dart';
+import 'package:time_tracker/common_widgets/platform_alert_dialog.dart';
+import 'package:time_tracker/common_widgets/platform_exception_alert_dialog.dart';
 
 class EditJobPage extends StatefulWidget {
   const EditJobPage({
@@ -16,8 +15,11 @@ class EditJobPage extends StatefulWidget {
   final Database database;
   final Job job;
 
-  static Future<void> show(BuildContext context, {Job job}) async {
-    final database = Provider.of<Database>(context, listen: false);
+  static Future<void> show(
+    BuildContext context, {
+    Database database,
+    Job job,
+  }) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => EditJobPage(
@@ -80,7 +82,7 @@ class _EditJobPageState extends State<EditJobPage> {
             defaultActionText: 'Ok',
           ).show(context);
         } else {
-          final id = widget.job?.id ?? documentIdFromCurrentDateTime();
+          final id = widget.job?.id ?? documentIdFromCurrentDate();
           final job = Job(
             id: id,
             name: _name,

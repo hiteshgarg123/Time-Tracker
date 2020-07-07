@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:time_tracker/app/home/job_entries/date_time_picker.dart';
 import 'package:time_tracker/app/home/job_entries/format.dart';
 import 'package:time_tracker/app/home/models/entry.dart';
 import 'package:time_tracker/app/home/models/job.dart';
-import 'package:time_tracker/widgets/platform_exception_alert_dialog.dart';
+import 'package:time_tracker/common_widgets/date_time_picker.dart';
+import 'package:time_tracker/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:time_tracker/services/database.dart';
 
 class EntryPage extends StatefulWidget {

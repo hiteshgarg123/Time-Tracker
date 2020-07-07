@@ -6,7 +6,7 @@ import 'package:time_tracker/app/sign_in/sign_in_button.dart';
 import 'package:time_tracker/app/sign_in/sign_in_manager.dart';
 import 'package:time_tracker/app/sign_in/social_sign_in_button.dart';
 import 'package:time_tracker/services/auth.dart';
-import 'package:time_tracker/widgets/platform_exception_alert_dialog.dart';
+import 'package:time_tracker/common_widgets/platform_exception_alert_dialog.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({

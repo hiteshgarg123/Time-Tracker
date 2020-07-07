@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:time_tracker/app/home/jobs/empty_page_content.dart';
 

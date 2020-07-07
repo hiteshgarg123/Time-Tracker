@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,7 @@ import 'package:time_tracker/app/home/jobs/edit_job_page.dart';
 import 'package:time_tracker/app/home/jobs/list_items_builder.dart';
 import 'package:time_tracker/app/home/models/entry.dart';
 import 'package:time_tracker/app/home/models/job.dart';
-import 'package:time_tracker/widgets/platform_exception_alert_dialog.dart';
+import 'package:time_tracker/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:time_tracker/services/database.dart';
 
 class JobEntriesPage extends StatelessWidget {
@@ -52,7 +51,11 @@ class JobEntriesPage extends StatelessWidget {
               'Edit',
               style: TextStyle(fontSize: 18.0, color: Colors.white),
             ),
-            onPressed: () => EditJobPage.show(context, job: job),
+            onPressed: () => EditJobPage.show(
+              context,
+              database: database,
+              job: job,
+            ),
           ),
         ],
       ),
