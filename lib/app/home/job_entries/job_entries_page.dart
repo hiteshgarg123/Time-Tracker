@@ -15,6 +15,7 @@ import 'package:time_tracker/services/database.dart';
 
 class JobEntriesPage extends StatelessWidget {
   const JobEntriesPage({@required this.database, @required this.job});
+
   final Database database;
   final Job job;
 
@@ -41,30 +42,40 @@ class JobEntriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 2.0,
-        title: Text(job.name),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              'Edit',
-              style: TextStyle(fontSize: 18.0, color: Colors.white),
-            ),
-            onPressed: () => EditJobPage.show(
-              context,
+    return StreamBuilder<Job>(
+      stream: database.jobStream(jobId: job.id),
+      builder: (context, snapshot) {
+        final thisJob = snapshot.data;
+        final jobName = thisJob?.name ?? '';
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 2.0,
+            title: Text(jobName),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'Edit',
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+                onPressed: () => EditJobPage.show(
+                  context,
+                  database: database,
+                  job: job,
+                ),
+              ),
+            ],
+          ),
+          body: _buildContent(context, job),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => EntryPage.show(
+              context: context,
               database: database,
               job: job,
             ),
           ),
-        ],
-      ),
-      body: _buildContent(context, job),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () =>
-            EntryPage.show(context: context, database: database, job: job),
-      ),
+        );
+      },
     );
   }
 
