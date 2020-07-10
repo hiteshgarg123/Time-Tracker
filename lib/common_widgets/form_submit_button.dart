@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker/widgets/custom_raised_button.dart';
+import 'package:time_tracker/common_widgets/custom_raised_button.dart';
 
 class FormSubmitButton extends CustomRaisedButton {
   FormSubmitButton({
