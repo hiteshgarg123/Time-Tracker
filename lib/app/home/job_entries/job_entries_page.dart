@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:time_tracker/app/home/job_entries/entry_list_item.dart';
 import 'package:time_tracker/app/home/job_entries/entry_page.dart';
 import 'package:time_tracker/app/home/jobs/edit_job_page.dart';
@@ -60,7 +60,7 @@ class JobEntriesPage extends StatelessWidget {
                 onPressed: () => EditJobPage.show(
                   context,
                   database: database,
-                  job: job,
+                  job: thisJob,
                 ),
               ),
             ],
@@ -71,7 +71,7 @@ class JobEntriesPage extends StatelessWidget {
             onPressed: () => EntryPage.show(
               context: context,
               database: database,
-              job: job,
+              job: thisJob,
             ),
           ),
         );
