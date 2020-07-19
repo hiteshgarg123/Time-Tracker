@@ -93,21 +93,15 @@ class SignInPage extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            height: size.height * 0.35,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/time_tracker.png'),
-              ),
-            ),
+          Image.asset(
+            'assets/images/time_tracker.png',
+            fit: BoxFit.cover,
           ),
           SizedBox(
             height: 50.0,
