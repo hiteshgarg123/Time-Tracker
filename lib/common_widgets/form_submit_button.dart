@@ -5,6 +5,7 @@ class FormSubmitButton extends CustomRaisedButton {
   FormSubmitButton({
     @required String text,
     VoidCallback onPressed,
+    Color disabledColor,
   }) : super(
           child: Text(
             text,
@@ -17,5 +18,6 @@ class FormSubmitButton extends CustomRaisedButton {
           color: Colors.indigo,
           borderRadius: 4.0,
           onPressed: onPressed,
+          disabledColor: disabledColor,
         );
 }
