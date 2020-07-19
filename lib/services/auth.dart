@@ -7,8 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class User {
   User({
     @required this.uid,
-    @required this.photoUrl,
-    @required this.displayName,
+    this.photoUrl,
+    this.displayName,
   });
   final String uid;
   final String photoUrl;

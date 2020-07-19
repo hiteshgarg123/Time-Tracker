@@ -83,6 +83,7 @@ class _EmailSignInFormChangeNotifierState
       SizedBox(height: 24.0),
       FormSubmitButton(
         text: model.primaryButtonText,
+        disabledColor: Colors.indigo[300],
         onPressed: model.canSubmit ? _submit : null,
       ),
       SizedBox(height: 8.0),
