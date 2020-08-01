@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
+import 'package:time_tracker/app/home/models/avatar_reference.dart';
 
 class FirestoreService {
   FirestoreService._();
@@ -51,5 +52,14 @@ class FirestoreService {
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
     return snapshots
         .map((snapshot) => builder(snapshot.data, snapshot.documentID));
+  }
+
+  // Reads the current avatar download url
+  Stream<AvatarReference> avatarReferenceStream({
+    @required String path,
+  }) {
+    final reference = Firestore.instance.document(path);
+    final snapshots = reference.snapshots();
+    return snapshots.map((snapshot) => AvatarReference.fromMap(snapshot.data));
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
+import 'package:time_tracker/app/home/models/avatar_reference.dart';
 import 'package:time_tracker/app/home/models/entry.dart';
 import 'package:time_tracker/app/home/models/job.dart';
 import 'package:time_tracker/services/api_path.dart';
@@ -15,6 +16,9 @@ abstract class Database {
   Future<void> setEntry(Entry entry);
   Future<void> deleteEntry(Entry entry);
   Stream<List<Entry>> entriesStream({Job job});
+
+  Future<void> setAvatarReference(AvatarReference avatarReference, String uid);
+  Stream<AvatarReference> avatarReferenceStream(String uid);
 }
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
@@ -74,5 +78,21 @@ class FirestoreDatabase implements Database {
             : null,
         builder: (data, documentID) => Entry.fromMap(data, documentID),
         sort: (lhs, rhs) => rhs.start.compareTo(lhs.start),
+      );
+
+  @override
+  Future<void> setAvatarReference(
+    AvatarReference avatarReference,
+    String uid,
+  ) async =>
+      await _service.setData(
+        path: APIPath.avatar(uid),
+        data: avatarReference.toMap(),
+      );
+
+  @override
+  Stream<AvatarReference> avatarReferenceStream(String uid) =>
+      _service.avatarReferenceStream(
+        path: APIPath.avatar(uid),
       );
 }
