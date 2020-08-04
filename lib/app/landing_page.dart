@@ -4,6 +4,8 @@ import 'package:time_tracker/app/home/home_page.dart';
 import 'package:time_tracker/app/sign_in/sign_in_page.dart';
 import 'package:time_tracker/services/auth.dart';
 import 'package:time_tracker/services/database.dart';
+import 'package:time_tracker/services/firebase_storage_service.dart';
+import 'package:time_tracker/services/image_picker_service.dart';
 
 class LandingPage extends StatelessWidget {
   @override
@@ -17,12 +19,22 @@ class LandingPage extends StatelessWidget {
           if (user == null) {
             return SignInPage.create(context);
           }
-          return Provider.value(
-            value: user,
-            child: Provider<Database>(
-              create: (_) => FirestoreDatabase(uid: user.uid),
-              child: HomePage(),
-            ),
+          return MultiProvider(
+            providers: [
+              Provider<User>(
+                create: (_) => User(uid: user.uid),
+              ),
+              Provider<Database>(
+                create: (_) => FirestoreDatabase(uid: user.uid),
+              ),
+              Provider<ImagePickerService>(
+                create: (_) => ImagePickerService(),
+              ),
+              Provider<FirebaseStorageService>(
+                create: (_) => FirebaseStorageService(uid: user.uid),
+              ),
+            ],
+            child: HomePage(),
           );
         } else {
           return Scaffold(
