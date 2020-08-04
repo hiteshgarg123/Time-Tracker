@@ -4,4 +4,5 @@ class APIPath {
   static String entry(String uid, String entryId) =>
       'users/$uid/entries/$entryId';
   static String entries(String uid) => 'users/$uid/entries';
+  static String avatar(String uid) => 'users/$uid/avatar/avatar';
 }
